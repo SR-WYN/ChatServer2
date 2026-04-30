@@ -1,0 +1,39 @@
+{
+  "SelfServer": {
+    "Host": "0.0.0.0",
+    "Port": "8091",
+    "Name": "ChatServer2",
+    "RPCPort": 50056
+  },
+  "GateServer": {
+    "Port": 7979
+  },
+  "VerifyServer": {
+    "Host": "127.0.0.1",
+    "Port": 50051
+  },
+  "MySql": {
+    "Host": "127.0.0.1",
+    "Passwd": "root",
+    "Port": 3307,
+    "Schema": "loadbalancer",
+    "User": "root"
+  },
+  "Redis": {
+    "Host": "127.0.0.1",
+    "Passwd": "123456",
+    "Port": 6379
+  },
+  "StatusServer": {
+    "Host": "127.0.0.1",
+    "Port": 50052
+  },
+  "PeerServer": {
+    "Servers": "ChatServer1"
+  },
+  "ChatServer1": {
+    "Name": "ChatServer1",
+    "Host": "127.0.0.1",
+    "Port": 50055
+  }
+}
