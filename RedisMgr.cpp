@@ -182,3 +182,8 @@ bool RedisMgr::hDel(const std::string& key, const std::string& filed)
     freeReplyObject(reply);
     return success;
 }
+
+bool RedisMgr::hSet(const std::string& key, const std::string& hkey, const std::string& value)
+{
+    return hSet(key.c_str(), hkey.c_str(), value.c_str(), value.length());
+}
