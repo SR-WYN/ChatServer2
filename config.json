@@ -6,7 +6,8 @@
     "RPCPort": 50056
   },
   "GateServer": {
-    "Port": 7979
+    "Port": 7979,
+    "host": "127.0.0.1"
   },
   "VerifyServer": {
     "Host": "127.0.0.1",
