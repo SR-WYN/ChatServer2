@@ -519,6 +519,7 @@ void LogicSystem::authFriendHandler(std::shared_ptr<CSession> session, const sho
     return_value["error"] = ErrorCodes::SUCCESS;
     auto user_info = std::make_shared<UserInfo>();
 
+    // 给同意方返回：刚通过的好友是申请人 applicant 的资料
     std::string base_key = RedisPrefix::USER_BASE_INFO + std::to_string(applicant_uid);
     bool b_info = getBaseInfo(base_key, applicant_uid, user_info);
     if (b_info)
@@ -541,6 +542,7 @@ void LogicSystem::authFriendHandler(std::shared_ptr<CSession> session, const sho
 
     MySqlMgr::getInstance().authFriendApply(applicant_uid, accepter_uid);
     MySqlMgr::getInstance().addFriend(applicant_uid, accepter_uid, alias_name);
+    // 通知申请人所在 Chat 节点（与 ChatServiceImpl::NotifyAuthFriend 中 touid 为收包用户一致）
     auto to_ip_key = RedisPrefix::USERIPPREFIX + std::to_string(applicant_uid);
     std::string to_ip_value = "";
     bool b_ip = RedisMgr::getInstance().get(to_ip_key, to_ip_value);

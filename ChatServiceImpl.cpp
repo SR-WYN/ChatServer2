@@ -1,12 +1,15 @@
 #include "ChatServiceImpl.h"
 #include "CSession.h"
-#include "MySqlMgr.h"
 #include "RedisMgr.h"
 #include "UserMgr.h"
 #include "const.h"
 #include "message.pb.h"
 #include "utils.h"
 #include <json/json.h>
+#include <json/reader.h>
+#include <memory>
+#include "MySqlMgr.h"
+
 
 ChatServiceImpl::ChatServiceImpl()
 {
@@ -87,6 +90,13 @@ Status ChatServiceImpl::NotifyAuthFriend(ServerContext *context, const AuthFrien
     return Status::OK;
 }
 
+Status ChatServiceImpl::NotifyTextChatMsg(ServerContext *context, const TextChatMsgReq *request,
+                                          TextChatMsgRsp *reply)
+{
+    // todo
+    return Status::OK;
+}
+
 bool ChatServiceImpl::getBaseInfo(std::string base_key, int uid,
                                   std::shared_ptr<UserInfo> &user_info)
 {
@@ -135,11 +145,4 @@ bool ChatServiceImpl::getBaseInfo(std::string base_key, int uid,
     std::string redis_str = redis_root.toStyledString();
     RedisMgr::getInstance().set(base_key, redis_str);
     return true;
-}
-
-Status ChatServiceImpl::NotifyTextChatMsg(ServerContext *context, const TextChatMsgReq *request,
-                                          TextChatMsgRsp *reply)
-{
-    // todo
-    return Status::OK;
 }

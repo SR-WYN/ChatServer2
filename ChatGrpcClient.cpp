@@ -1,14 +1,16 @@
 #include "ChatGrpcClient.h"
-#include "ConfigMgr.h"
-#include <memory>
 #include "ChatConPool.h"
-#include "utils.h"
+#include "ConfigMgr.h"
 #include "const.h"
+#include "utils.h"
+#include <grpcpp/client_context.h>
 #include <json/json.h>
+#include <memory>
+
 
 ChatGrpcClient::ChatGrpcClient()
 {
-    auto& cfg = ConfigMgr::getInstance();
+    auto &cfg = ConfigMgr::getInstance();
     auto server_list = cfg["PeerServer"]["Servers"];
     std::vector<std::string> words;
     std::stringstream ss(server_list);
@@ -18,13 +20,14 @@ ChatGrpcClient::ChatGrpcClient()
     {
         words.push_back(word);
     }
-    for (auto& word : words)
+    for (auto &word : words)
     {
         if (cfg[word]["Name"].empty())
         {
             continue;
         }
-        _pools[cfg[word]["Name"]] = std::make_unique<ChatConPool>(5,cfg[word]["Host"],cfg[word]["Port"]);
+        _pools[cfg[word]["Name"]] =
+            std::make_unique<ChatConPool>(5, cfg[word]["Host"], cfg[word]["Port"]);
     }
 }
 
@@ -32,7 +35,7 @@ ChatGrpcClient::~ChatGrpcClient()
 {
 }
 
-AddFriendRsp ChatGrpcClient::NotifyAddFriend(std::string server_ip,const AddFriendReq& req)
+AddFriendRsp ChatGrpcClient::NotifyAddFriend(std::string server_ip, const AddFriendReq &req)
 {
     AddFriendRsp rsp;
     utils::Defer defer([&rsp, &req]() {
@@ -90,12 +93,14 @@ AuthFriendRsp ChatGrpcClient::NotifyAuthFriend(std::string server_ip, const Auth
     return rsp;
 }
 
-bool ChatGrpcClient::GetBaseInfo(std::string base_key,int uid,std::shared_ptr<UserInfo>& user_info)
+bool ChatGrpcClient::GetBaseInfo(std::string base_key, int uid,
+                                 std::shared_ptr<UserInfo> &user_info)
 {
-    return false;
+    return true;
 }
 
-TextChatMsgRsp ChatGrpcClient::NotifyTextChatMsg(std::string server_ip,const TextChatMsgReq& req,const Json::Value& root_value)
+TextChatMsgRsp ChatGrpcClient::NotifyTextChatMsg(std::string server_ip, const TextChatMsgReq &req,
+                                                 const Json::Value &root_value)
 {
     return TextChatMsgRsp();
 }
