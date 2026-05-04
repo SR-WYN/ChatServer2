@@ -4,7 +4,8 @@
 struct UserInfo
 {
     UserInfo()
-        : name(""), pwd(""), uid(0), email(""), nick(""), desc(""), sex(0), icon(""), back("")
+        : name(""), pwd(""), uid(0), email(""), nick(""), desc(""), sex(0), icon(""), back(""),
+          alias_name("")
     {
     }
 
@@ -17,13 +18,16 @@ struct UserInfo
     int sex;
     std::string icon;
     std::string back;
+    std::string alias_name;
 };
 
 struct ApplyInfo
 {
     ApplyInfo(int uid, const std::string &name, const std::string &desc, const std::string &icon,
-              const std::string &nick, int sex, int status)
-        : _uid(uid), _name(name), _desc(desc), _icon(icon), _nick(nick), _sex(sex), _status(status)
+              const std::string &nick, int sex, int status,
+              const std::string &alias_name = std::string())
+        : _uid(uid), _name(name), _desc(desc), _icon(icon), _nick(nick), _sex(sex), _status(status),
+          alias_name(alias_name)
     {
     }
 
@@ -34,4 +38,5 @@ struct ApplyInfo
     std::string _nick;
     int _sex;
     int _status;
+    std::string alias_name;
 };
